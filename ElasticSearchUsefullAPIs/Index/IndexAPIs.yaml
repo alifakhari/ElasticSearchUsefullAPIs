@@ -7,3 +7,97 @@ GET /_cat/indices/{Index_Name}?v
 GET /{Index_Name}/_settings
 
 GET /_template/{Index_Name}
+
+
+
+
+PUT /_template/index_defaults 
+{
+    "index_patterns": "{Index_Name}", 
+    "settings" : {
+        "index" : {
+            "number_of_shards" : 5,
+            "number_of_replicas" : 1
+        }
+    }
+}
+
+GET _cat/shards?v=true&h=index,prirep,shard,store&s=prirep,store&bytes=gb
+
+GET /{index_name}/_mapping?pretty
+
+
+PUT /{index_name}/_settings
+{
+  "settings": {
+    "index.blocks.write": false
+  }
+}
+
+
+POST /{index_to_clone}/_clone/{cloned_index_name}
+
+
+POST _reindex
+{
+  "source": {
+    "index": "my-index-2099.10"
+  },
+  "dest": {
+    "index": "my-index-2099.10"
+  }
+}
+
+GET {Index_Name}/_search
+{
+  "query": {
+    "match_phrase": { "srcip": "{IP}" }
+  },
+  "aggregations": {
+    "agentname": {
+      "significant_text": {
+        "field": "agent.name",
+        "size": 100
+      }
+    }
+  },
+   "filter":{
+     "range":{
+            "@timestamp": {
+              "gte": "2022-10-25T00:00:00.925Z",
+              "lte": "2022-10-26T23:59:59.925Z"
+             }
+          }
+    }
+} 
+
+GET {index_name}/_count
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "match_phrase": {
+            "srcip": "{ip}"
+          }
+        },
+         {
+          "match_phrase": {
+            "service_name": "{ES}"
+          }
+        }
+      ],
+      "filter":{
+          "range":{
+             "@timestamp": {
+               "gte": "2022-11-08T00:00:00.925Z",
+               "lte": "2022-11-08T14:45:59.925Z"
+          }
+        }
+      }
+    }
+  }
+} 
+
+
+

@@ -7,3 +7,26 @@ GET /_cluster/allocation/explain?pretty
 GET _cat/allocation?v
 
 GET /_cluster/allocation/explain?pretty
+
+GET _cluster/stats?filter_path=indices.shards.total
+
+GET _cat/recovery?v
+
+
+POST /_security/api_key
+{
+  "name": "cls_test",
+  "expiration": "1d", 
+  "role_descriptors": { 
+    "role-a": {
+      "cluster": ["all"],
+      "index": [
+        {
+          "names": ["*"],
+          "privileges": ["all"]
+        }
+      ]
+    }
+  }
+}
+
