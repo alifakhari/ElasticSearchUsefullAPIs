@@ -99,5 +99,23 @@ GET {index_name}/_count
   }
 } 
 
-
-
+POST /{index_name}/_update_by_query
+ {
+  "script" : "for (int i = 0; i < ctx._source.provider_candidates.length; ++i) { ctx._source.provider_candidates[i].remove(\"queryParameters\") }",
+   "query": {
+     "nested": {
+       "path": "provider_candidates",
+       "query": {
+         "bool": {
+           "must": [
+             {
+               "exists": {
+                 "field": "provider_candidates.queryParameters"
+               }
+             }
+           ]
+         }
+       }
+     }
+   }
+ }
