@@ -11,6 +11,16 @@ GET /_template/{Index_Name}
 
 
 
+POST /{index_name}/_delete_by_query
+{
+  "query": {
+    "match": {
+      "data.srcip": "{IP}"
+    }
+  }
+}
+
+
 PUT /_template/index_defaults 
 {
     "index_patterns": "{Index_Name}", 
