@@ -1,0 +1,9 @@
+GET /_cat/shards?v
+
+GET /_cat/templates
+
+GET /_cat/indices/{Index_Name}?v
+
+GET /{Index_Name}/_settings
+
+GET /_template/{Index_Name}

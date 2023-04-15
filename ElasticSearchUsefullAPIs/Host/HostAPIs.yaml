@@ -1,0 +1,12 @@
+GET _cat/nodes?v=true
+
+GET _cat/nodeattrs?v
+
+GET _cat/nodes?v=true&h=name,heap.current
+
+GET /_cat/nodes?h=id,ip,v,m
+
+PUT /{ElasticNode}/_settings
+{
+"index.routing.allocation.require.box_type": "warm"
+}
