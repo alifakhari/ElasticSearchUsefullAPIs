@@ -30,3 +30,42 @@ POST /_security/api_key
   }
 }
 
+
+PUT _cluster/settings
+{
+  "transient": {
+    "cluster.routing.allocation.disk.watermark.low": "100gb",
+    "cluster.routing.allocation.disk.watermark.high": "50gb",
+    "cluster.routing.allocation.disk.watermark.flood_stage": "10gb",
+    "cluster.info.update.interval": "1m"
+  }
+}
+
+PUT /_cluster/settings 
+{
+  "transient" :{
+    "cluster.routing.allocation.node_concurrent_recoveries" : 6
+  }
+}
+
+PUT _cluster/settings
+{
+  "persistent" : {
+    "cluster.routing.allocation.exclude._ip" : ""
+  }
+}
+
+
+PUT /_cluster/settings 
+{
+  "transient" :{
+  "cluster.routing.allocation.cluster_concurrent_rebalance" : 4
+  }
+}
+
+PUT /_cluster/settings
+{
+  "transient" :{
+    "indices.recovery.max_bytes_per_sec" : "80mb"
+  }
+}
